@@ -135,7 +135,9 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
 
         return {
             'background-color' : team == null ? '#c6c6c6' : team.color,
-            'color' : team == null ? '' : team.textColor
+            'color' : team == null ? '' : team.textColor,
+            'border-right' : teamIdx > 0 ? 'none' : '1px solid #fff',
+            'border-left' : teamIdx > 0 ? '1px solid #fff' : 'none'
         };
     };
 
