@@ -1,21 +1,21 @@
-Id	Pays	Initiales	Groupe	Couleur	Couleur texte
-1	Australie	Aus	A	#F3A827	noir
-2	Angleterre	Ang	A	#FF7099	noir
-3	Galles	Gal	A	#FF0016	blanc
-4	Fidji	Fidji	A	#505050	blanc
-5	Uruguay	Uru	A	#7CC8DD	blanc
-6	Af.-du-Sud	AfSud	B	#004940	blanc
-7	Samoa	Sam	B	#5842B7	blanc
-8	Japon	Jap	B	#FC4F5A	noir
-9	Ecosse	Eco	B	#160060	blanc
-10	Etats-Unis	USA	B	#9F1737	blanc
-11	Nlle-Zélande	N-Z	C	#000000	blanc
-12	Argentine	Arg	C	#BEDEE5	noir
-13	Tonga	Ton	C	#E85736	noir
-14	Géorgie	Géo	C	#B50000	blanc
-15	Namibie	Nam	C	#266CE2	blanc
-16	France	Fra	D	#0042AA	blanc
-17	Irlande	Irl	D	#14916D	blanc
-18	Italie	Ita	D	#00BDFF	noir
-19	Canada	Can	D	#DC1F1E	blanc
-20	Roumanie	Rou	D	#FFCD00	noir
+Id	Pays	Initiales	Pays complet	Groupe	Couleur	Couleur texte
+1	Australie	Aus	Australie	A	#F3A827	blanc
+2	Angleterre	Ang	Angleterre	A	#FF7099	blanc
+3	Galles	Gal	Galles	A	#FF0016	blanc
+4	Fidji	Fidji	Fidji	A	#505050	blanc
+5	Uruguay	Uru	Uruguay	A	#7CC8DD	blanc
+6	Af.-du-Sud	AfSud	Afrique-du-Sud	B	#004940	blanc
+7	Samoa	Sam	Samoa	B	#5842B7	blanc
+8	Japon	Jap	Japon	B	#FC4F5A	blanc
+9	Ecosse	Eco	Ecosse	B	#160060	blanc
+10	Etats-Unis	USA	Etats-Unis	B	#9F1737	blanc
+11	Nlle-Zélande	N-Z	Nouvelle-Zélande	C	#000000	blanc
+12	Argentine	Arg	Argentine	C	#BEDEE5	gris
+13	Tonga	Ton	Tonga	C	#E85736	blanc
+14	Géorgie	Géo	Géorgie	C	#B50000	blanc
+15	Namibie	Nam	Namibie	C	#266CE2	blanc
+16	France	Fra	France	D	#0042AA	blanc
+17	Irlande	Irl	Irlande	D	#14916D	blanc
+18	Italie	Ita	Italie	D	#00BDFF	blanc
+19	Canada	Can	Canada	D	#DC1F1E	blanc
+20	Roumanie	Rou	Roumanie	D	#FFCD00	gris

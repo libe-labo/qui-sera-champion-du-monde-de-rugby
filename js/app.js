@@ -54,9 +54,10 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                 country : d.Pays,
                 group : d.Groupe,
                 initials : d.Initiales,
+                fullcountry : d['Pays complet'],
 
                 color : d.Couleur,
-                textColor : d['Couleur texte'] === 'blanc' ? '#f4f4f4' : '#000',
+                textColor : d['Couleur texte'] === 'blanc' ? '#f4f4f4' : 'rgb(51, 51, 51)',
                 slug : S(d.Pays).slugify().s,
 
                 order : -1
@@ -153,7 +154,9 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
 
     $scope.getCountryName = function(roundIdx, matchIdx, teamIdx, small) {
         var team = getTeamFor(roundIdx, matchIdx, teamIdx);
-        return team == null ? '' : (small && roundIdx < 2 ? team.initials : team.country);
+        return team == null ? '' : (small && roundIdx < 2 ? team.initials
+                                                          : roundIdx < 2 ? team.country
+                                                                         : team.fullcountry);
     };
 
     $scope.export = function() {
