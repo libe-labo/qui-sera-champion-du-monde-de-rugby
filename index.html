@@ -19,7 +19,7 @@
         <meta property="og:site_name" content="Libération.fr"/>
         <meta property="og:image" content="http://www.liberation.fr/apps/2015/09/" />
         <meta property="og:url" content="http://www.liberation.fr/apps/2015/09/" />
-        <meta property="og:description" content="La Coupe du monde de rugby a lieu du 18 septembre au 31 octobre en Angleterre et aux Pays de Galles. Vingt équipes, 48 matchs et six semaines de compétition pour désigner le successeur de la Nouvelle-Zélande, vainqueur chez elle, il y a quatre ans. Les All Blacks pour un troisième titre ? L’Australie ou l’Afrique du Sud, elles aussi en lice pour un troisième sacre ? L’Angleterre chez elle ? Ou la France, enfin, jamais titrée malgré trois finales en sept éditions ? Faites vos jeux !" />
+        <meta property="og:description" content="Qui voyez-vous remporter la Coupe du monde de rugby 2015 ? Faites vos pronostics avec l'application Libé !" />
 
 
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -101,8 +101,12 @@
                 <button type="button" ng-click="export()">
                     <i class="fa fa-download"></i> Télécharger mon pronostic
                 </button>
-                <button type="button"><i class="fa fa-twitter"></i> Tweeter</button>
-                <button type="button"><i class="fa fa-facebook"></i> Partager</button>
+                <button type="button" ng-click="tweet()">
+                    <i class="fa fa-twitter"></i> Tweeter
+                </button>
+                <button type="button" ng-click="shareOnFacebook()">
+                    <i class="fa fa-facebook"></i> Partager
+                </button>
                 <button type="button" ng-click="refresh()">
                     <i class="fa fa-refresh"></i> Recommencer
                 </button>

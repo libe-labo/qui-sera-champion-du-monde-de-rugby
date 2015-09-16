@@ -120,6 +120,23 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         }
     };
 
+    var getPalmaresString = function() {
+        var palmaresString = [];
+        _.each($scope.palmares, function(round, roundIdx) {
+            _.each(round, function(match, matchIdx) {
+                _.each(match, function(team, teamIdx) {
+                    var _team = getTeamFor(roundIdx, matchIdx, teamIdx);
+                    if (_team != null) {
+                        palmaresString.push(_team.id);
+                    } else {
+                        return '';
+                    }
+                });
+            });
+        });
+        return palmaresString.join(';');
+    };
+
     /*
     ** Scope functions
     */
@@ -150,6 +167,28 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
             });
         });
         window.exportImage(data);
+    };
+
+    $scope.tweet = function() {
+        var url = encodeURIComponent(window.location.origin + window.location.pathname +
+                                     '?p=' + getPalmaresString());
+        var text = encodeURIComponent('Qui voyez-vous remporter la Coupe du monde de rugby 2015 ?' +
+                                      ' Faites vos pronostics avec l\'application Libé !');
+        if (getTeamFor(3, 0, 0) != null) {
+            text = encodeURIComponent('Mon pronostic pour la Coupe du monde de rugby #RWC2015 : ' +
+                                      getTeamFor(3, 0, 0).country + ' vainqueur ! Et vous ?');
+        }
+
+        window.open('https://twitter.com/intent/tweet?original_referer=' + '' +
+                    '&text=' + text + ' ' + url, '', 'width=575,height=400,menubar=no,toolbar=no');
+    };
+
+    $scope.shareOnFacebook = function() {
+        var url = encodeURIComponent(window.location.origin + window.location.pathname +
+                                     '?p=' + getPalmaresString());
+
+        window.open('http://www.facebook.com/sharer/sharer.php?u=' + url, '',
+                    'width=575,height=400,menubar=no,toolbar=no');
     };
 
     $scope.refresh = function() {
