@@ -11,6 +11,8 @@ angular.module('app', ['dragularModule']).config(['$locationProvider', function(
 }]);
 
 angular.module('app').controller('RugbyController', ['$scope', '$http', function($scope, $http) {
+    var allTeams = [];
+
     $scope.groups = { 'A' : [] , 'B' : [] , 'C' : [] , 'D' : [] };
     $scope.palmares = [
         [
@@ -45,9 +47,9 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     ];
 
     $http.get('assets/groups.tsv').then(function(response) {
-        $scope.groups = _.groupBy(d3.tsv.parse(response.data, function(d) {
+        allTeams = d3.tsv.parse(response.data, function(d) {
             return {
-                id : d.Id,
+                id : +d.Id,
 
                 country : d.Pays,
                 group : d.Groupe,
@@ -59,7 +61,36 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
 
                 order : -1
             };
-        }), 'group');
+        });
+        $scope.groups = _.groupBy(allTeams, 'group');
+
+        /*
+        ** Init from URL
+        */
+        _.each(window.location.search.replace(/^\?/, '').split('&'), function(search) {
+            search = search.split('=');
+            if (search[0] === 'p') {
+                var ids = search[1].split(';');
+                if (ids.length === 15) {
+                    _.each(ids, function(id, idx) {
+                        var team = _.find(allTeams,{ id : parseInt(id) });
+                        if (idx < 8) {
+                            team.order = (idx % 2) ? 2 : 1;
+                        } else if (idx < 12) {
+                            var map = [0, 0, 1, 1];
+                            $scope.palmares[1][map[idx - 8]][idx % 2].group = team.group;
+                            $scope.palmares[1][map[idx - 8]][idx % 2].order = team.order;
+                        } else if (idx < 14) {
+                            $scope.palmares[2][0][idx % 2].group = team.group;
+                            $scope.palmares[2][0][idx % 2].order = team.order;
+                        } else {
+                            $scope.palmares[3][0][0].group = team.group;
+                            $scope.palmares[3][0][0].order = team.order;
+                        }
+                    });
+                }
+            }
+        });
     });
 
     var getTeamFor = function(roundIdx, matchIdx, teamIdx) {
