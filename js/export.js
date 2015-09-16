@@ -67,38 +67,50 @@ $(function() {
 
     var createViz = function(theData) {
         var size = 800,
-            svg = d3.select('#container').append('svg').attr('width', size).attr('height', size);
+            svg = d3.select('#container').append('svg').attr('width', size).attr('height', size),
+            width = 50,
+            rotations = [
+                [-20, 20, 0, 70, 110, 0, 160, 200, 0, 250, 290, 0],
+                [0, 90, 0, 180, 270, 0],
+                [45, 225]
+            ];
 
-        // var theData = [
-        //         ['Canada', 'Écosse', 'Australie', 'Japon', 'Angleterre',
-        //          'Fidji', 'Samoa', 'France'],
-        //         ['Fidji', 'Samoa', 'Canada', 'Japon'],
-        //         ['Fidji', 'Canada'],
-        //         ['Fidji']
-        //     ],
-        var colors = {
-                'Afrique-du-Sud'   : '#004940',
-                'Angleterre'       : '#FF7099',
-                'Argentine'        : '#BEDEE5',
-                'Australie'        : '#F3A827',
-                'Canada'           : '#DC1F1E',
-                'États-Unis'       : '#9F1737',
-                'Écosse'           : '#160060',
-                'Fidji'            : '#505050',
-                'France'           : '#0042AA',
-                'Galles'           : '#FF0016',
-                'Géorgie'          : '#B50000',
-                'Irlande'          : '#14916D',
-                'Italie'           : '#00BDFF',
-                'Japon'            : '#FC4F5A',
-                'Namibie'          : '#266CE2',
-                'Nouvelle-Zélande' : '#000000',
-                'Roumanie'         : '#FFCD00',
-                'Samoa'            : '#5842B7',
-                'Tonga'            : '#E85736',
-                'Uruguay'          : '#7CC8DD'
-            },
-            width = 50;
+        var createLabels = function(data, outerRadius, globalIdx) {
+            _.each(data, function(d) {
+                d.startAngle -= (Math.PI / 2);
+                d.endAngle -= (Math.PI / 2);
+
+                d.midAngle = d.startAngle + ((d.endAngle - d.startAngle) / 2);
+            });
+            var cl = 'text' + String(globalIdx + 1);
+            arcs.selectAll('.' + cl).data(data).enter()
+                .append('text').attr('class', cl).text(function(d) { return d.data.label; })
+                               .attr('x', function(d) {
+                                   return Math.cos(d.midAngle) * (outerRadius - width * 0.7);
+                               }).attr('y', function(d) {
+                                   return Math.sin(d.midAngle) * (outerRadius - width * 0.7);
+                               })
+                               .attr('text-anchor', 'middle')
+                               .attr('fill', function(d) { return d.data.textColor; })
+                               .attr('transform', function(d, idx) {
+                                   return 'rotate(' +
+                                        String(rotations[globalIdx][idx]) + ' ' +
+                                        String(d3.select(this).attr('x')) + ' ' +
+                                        String(d3.select(this).attr('y')) + ' ' +
+                                   ')';
+                               });
+        };
+
+        var createArcs = function(globalIdx) {
+            var cl = 'arc' + String(globalIdx);
+            arcs.selectAll('.' + cl).data(pie(data)).enter()
+                .append('path').attr('class', cl)
+                               .attr('d', d3.svg.arc().innerRadius(outerRadius - width)
+                                                      .outerRadius(outerRadius))
+                               .attr('fill', function(d) {
+                                   return d.data.color;
+                               });
+        };
 
         var arcs = svg.append('g')
                       .attr('class', 'arcs')
@@ -110,7 +122,8 @@ $(function() {
             if ([2, 5, 8].indexOf(j) >= 0) {
                 data.push({ value : 2 , order : j++ , color : 'transparent' });
             }
-            data.push({ value : 11 , order : j , color : theData[0][k].color });
+            data.push({ value : 11 , order : j , textColor : theData[0][k].textColor ,
+                        color : theData[0][k].color , label : theData[0][k].country });
             ++k;
         }
         data.push({ value : 2 , order : j , color : 'transparent' });
@@ -122,31 +135,22 @@ $(function() {
         pie.endAngle(pie.startAngle() + (Math.PI * 2));
 
         var outerRadius = (size / 2) - width;
-        arcs.selectAll('.arc1').data(pie(data)).enter()
-            .append('path').attr('class', 'arc1')
-                           .attr('d', d3.svg.arc().innerRadius(outerRadius - width)
-                                                  .outerRadius(outerRadius))
-                           .attr('fill', function(d) {
-                               return d.data.color;
-                           });
+        createArcs(1);
+        createLabels(pie(data), outerRadius, 0);
 
         k = 0; data = [];
         for (j = 0; j < 5; ++j) {
             if (j === 2) {
                 data.push({ value : 2 , order : j++ , color : 'transparent' });
             }
-            data.push({ value : 24 , order : j , color : theData[1][k].color });
+            data.push({ value : 24 , order : j , textColor : theData[1][k].textColor ,
+                        color : theData[1][k].color , label : theData[1][k].country });
             ++k;
         }
         data.push({ value : 2 , order : j , color : 'transparent' });
         outerRadius -= width;
-        arcs.selectAll('.arc2').data(pie(data)).enter()
-            .append('path').attr('class', 'arc2')
-                           .attr('d', d3.svg.arc().innerRadius(outerRadius - width)
-                                                  .outerRadius(outerRadius))
-                           .attr('fill', function(d) {
-                               return d.data.color;
-                           });
+        createArcs(2);
+        createLabels(pie(data), outerRadius, 1);
 
         var data2 = [{ value : 12.5 , order : 0 } , { value : 87.5 , order : 1 }];
         pie.startAngle(0);
@@ -155,16 +159,12 @@ $(function() {
         pie.endAngle(pie.startAngle() + (Math.PI * 2));
         data = [];
         for (j = 0; j < theData[2].length; ++j) {
-            data.push({ value : 50 , order : j , color : theData[2][j].color });
+            data.push({ value : 50 , order : j , textColor : theData[2][j].textColor ,
+                        color : theData[2][j].color , label : theData[2][j].country });
         }
         outerRadius -= width;
-        arcs.selectAll('.arc3').data(pie(data)).enter()
-            .append('path').attr('class', 'arc3')
-                           .attr('d', d3.svg.arc().innerRadius(outerRadius - width)
-                                                  .outerRadius(outerRadius))
-                           .attr('fill', function(d) {
-                               return d.data.color;
-                           });
+        createArcs(3);
+        createLabels(pie(data), outerRadius, 2);
 
         outerRadius -= width;
         arcs.selectAll('.arc4')
@@ -223,5 +223,12 @@ $(function() {
            .attr('transform', 'translate(' + String((size / 2) - (163.7 / 2)) +
                                       ', ' + String((size / 2) - (254.7 / 1.5)) +
                               ')');
+
+        svg.append('text').text(theData[3][0].country)
+                          .attr('class', 'large')
+                          .attr('text-anchor', 'middle')
+                          .attr('x', size / 2)
+                          .attr('y', (size / 2) + (outerRadius * 0.75))
+                          .style('fill', theData[3][0].textColor);
     };
 });
