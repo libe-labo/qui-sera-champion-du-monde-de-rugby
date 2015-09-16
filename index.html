@@ -63,7 +63,7 @@
             <div class="row">
                 <div class="group col-md-3" ng-repeat="(groupname, group) in groups">
                     <span class="group__name">{{ groupname }}</span>
-                    <div class="group__inner">
+                    <div class="group__inner hidden-sm hidden-xs">
                         <ul x-group="{{ groupname }}"  class="group__flags" dragular="dragularOptions">
                             <li class="group__flag" ng-repeat="team in group">
                                 <span>{{ team.country }}</span>
@@ -74,6 +74,14 @@
                             <li dragular="dragularDropOptions" x-group="{{ groupname }}" ng-style="getPronosticStyle(groupname, 1)" class="group__pronostic"></li>
                             <li dragular="dragularDropOptions" x-group="{{ groupname }}" ng-style="getPronosticStyle(groupname, 2)" class="group__pronostic"></li>
                         </ul>
+                    </div>
+                    <div class="group__inner visible-sm visible-xs">
+                        <select class="form-control" ng-repeat="x in [0, 1]" ng-model="selectModels[groupname][x]" ng-change="onSelectChange(groupname, x)">
+                            <option value="">--</option>
+                            <option ng-repeat="team in group" ng-value="team.slug">
+                                {{ team.country }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>

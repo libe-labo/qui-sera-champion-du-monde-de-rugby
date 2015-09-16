@@ -31,6 +31,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         ]
     ];
 
+    // Mapping one round to the next one
     $scope.mapping = [
         [
             [[0, 0], [0, 0]], [[0, 1], [0, 1]], [[1, 0], [1, 0]], [[1, 1], [1, 1]]
@@ -76,6 +77,9 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         }
     };
 
+    /*
+    ** Scope functions
+    */
     $scope.selectWinner = function(roundIdx, matchIdx, teamIdx) {
         var team = getTeamFor(roundIdx, matchIdx, teamIdx);
 
@@ -93,7 +97,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     };
 
     /*
-    ** Classes
+    ** Scope class functions
     */
     $scope.getRoundClass = (function() {
         var rounds = ['quarterfinals', 'semifinals', 'final', 'winner'];
@@ -110,7 +114,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     })();
 
     /*
-    ** style
+    ** Scope style function
     */
     $scope.getPronosticStyle = function(group, order) {
         var team = _.find($scope.groups[group], { order : order });
@@ -203,5 +207,22 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                 }
             });
         });
+
     });
+
+    /*
+    ** Select
+    */
+    $scope.selectModels = {};
+    _.each($scope.groups, function(group, groupname) {
+        $scope.selectModels[groupname] = ['', ''];
+    });
+
+    $scope.onSelectChange = function(groupname, order) {
+        var other = order > 0 ? 0 : 1;
+
+        if ($scope.selectModels[groupname][other] == $scope.selectModels[groupname][order]) {
+            $scope.selectModels[groupname][other] = '';
+        }
+    };
 }]);
