@@ -1,0 +1,13 @@
+svg {
+    background-color: #fff;
+}
+
+svg path {
+    stroke-width: 3pt;
+    stroke: #fff;
+}
+
+svg path.trophy {
+    stroke-width: 0;
+    fill: #fff;
+}
