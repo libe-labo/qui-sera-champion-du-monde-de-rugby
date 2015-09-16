@@ -192,7 +192,10 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     };
 
     $scope.refresh = function() {
-        window.location.reload();
+        window.location.search = '';
+        window.setTimeout(function() {
+            window.location.reload();
+        }, 100);
     };
 
     /*
