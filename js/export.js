@@ -60,7 +60,10 @@ $(function() {
             context.drawImage(image, 0, 0);
             a.download = 'image.png';
             a.href = canvas.toDataURL('image/png');
+            a.setAttribute('class', 'download');
+            document.body.appendChild(a);
             a.click();
+            a.remove();
         };
     };
 
