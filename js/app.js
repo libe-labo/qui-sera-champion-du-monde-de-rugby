@@ -78,11 +78,14 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                                 var team = _.find(allTeams,{ id : parseInt(id) });
                                 if (idx < 8) {
                                     team.order = (idx % 2) ? 2 : 1;
+
                                     $('.group__flag[x-team="' + team.id +'"]')
                                         .clone()
                                         .appendTo($('.group__pronostics ' +
                                                      'li[x-group="' + team.group + '"]')
                                             .get((idx % 2) ? 1 : 0));
+
+                                    $scope.selectModels[team.group][idx % 2] = team.slug;
                                 } else if (idx < 12) {
                                     var map = [0, 0, 1, 1];
                                     $scope.palmares[1][map[idx - 8]][idx % 2].group = team.group;

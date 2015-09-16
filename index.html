@@ -77,11 +77,8 @@
                         </ul>
                     </div>
                     <div class="group__inner visible-sm visible-xs">
-                        <select class="form-control" ng-repeat="x in [0, 1]" ng-model="selectModels[groupname][x]" ng-change="onSelectChange(groupname, x)">
+                        <select class="form-control" ng-repeat="x in [0, 1]" ng-model="selectModels[groupname][x]" ng-change="onSelectChange(groupname, x)" ng-options="team.slug as team.country for team in group">
                             <option value="">--</option>
-                            <option ng-repeat="team in group" ng-value="team.slug">
-                                {{ team.country }}
-                            </option>
                         </select>
                     </div>
                 </div>
