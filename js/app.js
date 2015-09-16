@@ -67,30 +67,39 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         /*
         ** Init from URL
         */
-        _.each(window.location.search.replace(/^\?/, '').split('&'), function(search) {
-            search = search.split('=');
-            if (search[0] === 'p') {
-                var ids = search[1].split(';');
-                if (ids.length === 15) {
-                    _.each(ids, function(id, idx) {
-                        var team = _.find(allTeams,{ id : parseInt(id) });
-                        if (idx < 8) {
-                            team.order = (idx % 2) ? 2 : 1;
-                        } else if (idx < 12) {
-                            var map = [0, 0, 1, 1];
-                            $scope.palmares[1][map[idx - 8]][idx % 2].group = team.group;
-                            $scope.palmares[1][map[idx - 8]][idx % 2].order = team.order;
-                        } else if (idx < 14) {
-                            $scope.palmares[2][0][idx % 2].group = team.group;
-                            $scope.palmares[2][0][idx % 2].order = team.order;
-                        } else {
-                            $scope.palmares[3][0][0].group = team.group;
-                            $scope.palmares[3][0][0].order = team.order;
+        window.setTimeout(function() {
+            $scope.$apply(function() {
+                _.each(window.location.search.replace(/^\?/, '').split('&'), function(search) {
+                    search = search.split('=');
+                    if (search[0] === 'p') {
+                        var ids = search[1].split(';');
+                        if (ids.length === 15) {
+                            _.each(ids, function(id, idx) {
+                                var team = _.find(allTeams,{ id : parseInt(id) });
+                                if (idx < 8) {
+                                    team.order = (idx % 2) ? 2 : 1;
+                                    $('.group__flag[x-team="' + team.id +'"]')
+                                        .clone()
+                                        .appendTo($('.group__pronostics ' +
+                                                     'li[x-group="' + team.group + '"]')
+                                            .get((idx % 2) ? 1 : 0));
+                                } else if (idx < 12) {
+                                    var map = [0, 0, 1, 1];
+                                    $scope.palmares[1][map[idx - 8]][idx % 2].group = team.group;
+                                    $scope.palmares[1][map[idx - 8]][idx % 2].order = team.order;
+                                } else if (idx < 14) {
+                                    $scope.palmares[2][0][idx % 2].group = team.group;
+                                    $scope.palmares[2][0][idx % 2].order = team.order;
+                                } else {
+                                    $scope.palmares[3][0][0].group = team.group;
+                                    $scope.palmares[3][0][0].order = team.order;
+                                }
+                            });
                         }
-                    });
-                }
-            }
-        });
+                    }
+                });
+            });
+        }, 500);
     });
 
     var getTeamFor = function(roundIdx, matchIdx, teamIdx) {
