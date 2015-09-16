@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+        <title>Libération.fr – Pour qui la Coupe Webb Ellis ?</title>
+        <meta name="description" content="Tout savoir sur les dernières actualités politiques, monde, société, sports, écologie avec le journal en ligne Libération.">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+        <meta name="keywords" content="actualités, news">
+        <link rel="shortcut icon" href="http://www.liberation.fr/favicon.ico">
+        <link rel="shortcut icon" href="http://www.liberation.fr/favicon.png">
+
+        <link rel="canonical" href="http://www.liberation.fr/apps/2015/09/">
+        <script type="text/javascript" async="" src="http://www.google-analytics.com/analytics.js"></script>
+
+
+        <meta property="og:title" content="Pour qui la Coupe Webb Ellis ?" />
+        <meta property="og:site_name" content="Libération.fr"/>
+        <meta property="og:image" content="http://www.liberation.fr/apps/2015/09/" />
+        <meta property="og:url" content="http://www.liberation.fr/apps/2015/09/" />
+        <meta property="og:description" content="La Coupe du monde de rugby a lieu du 18 septembre au 31 octobre en Angleterre et aux Pays de Galles. Vingt équipes, 48 matchs et six semaines de compétition pour désigner le successeur de la Nouvelle-Zélande, vainqueur chez elle, il y a quatre ans. Les All Blacks pour un troisième titre ? L’Australie ou l’Afrique du Sud, elles aussi en lice pour un troisième sacre ? L’Angleterre chez elle ? Ou la France, enfin, jamais titrée malgré trois finales en sept éditions ? Faites vos jeux !" />
+
+
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="bower_components/dragular.js/dist/dragular.min.js"></script>
+        <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+        <script type="text/javascript" src="bower_components/lodash/lodash.min.js"></script>
+        <script type="text/javascript" src="bower_components/string/dist/string.min.js"></script>
+
+        <script type="text/javascript" src="js/app.js"></script>
+
+
+        <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="bower_components/dragular.js/dist/dragular.min.css">
+
+        <link type="text/css" rel="stylesheet" href="style.css">
+        <link type="text/css" rel="stylesheet" href="header.css">
+        <link type="text/css" rel="stylesheet" href="svg.css">
+    </head>
+    <body ng-cloak ng-controller="RugbyController">
+        <header id="main-header">
+            <nav id="main-nav" role="navigation">
+                <div class="wrap">
+                    <div class="navbar-header">
+                        <span class="navbar-brand">
+                            <a href="http://www.liberation.fr">
+                                <img src="http://s1.libe.com/img/logo-liberation-311x113.png" alt="Libération">
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div id="container" class="container">
+            <div class="row title">
+                <h1>Pour qui la Coupe Webb Ellis&nbsp;?</h1>
+                <p class="title__chapo">La Coupe du monde de rugby a lieu du 18 septembre au 31 octobre en Angleterre et aux Pays de Galles. Vingt équipes, 48 matchs et six semaines de compétition pour désigner le successeur de la Nouvelle-Zélande, vainqueur chez elle, il y a quatre ans. Les All Blacks pour un troisième titre&nbsp;? L’Australie ou l’Afrique du Sud, elles aussi en lice pour un troisième sacre&nbsp;? L’Angleterre chez elle&nbsp;? Ou la France, enfin, jamais titrée malgré trois finales en sept éditions&nbsp;? Faites vos jeux&nbsp;!</p>
+                <p><br></p>
+                <p class="title__man">Choisissez qui terminera aux deux premières places de chaque poule, puis cliquez sur les flèches à partir des quarts de finale...</p>
+            </div>
+            <div class="row">
+                <div class="group col-md-3" ng-repeat="(groupname, group) in groups">
+                    <span class="group__name">{{ groupname }}</span>
+                    <div class="group__inner">
+                        <ul x-group="{{ groupname }}"  class="group__flags" dragular="dragularOptions">
+                            <li class="group__flag" ng-repeat="team in group">
+                                <span>{{ team.country }}</span>
+                                <img title="{{ team.country }}" ng-src="assets/flags/{{ team.slug }}.png">
+                            </li>
+                        </ul>
+                        <ul class="group__pronostics">
+                            <li dragular="dragularDropOptions" x-group="{{ groupname }}" ng-style="getPronosticStyle(groupname, 1)" class="group__pronostic"></li>
+                            <li dragular="dragularDropOptions" x-group="{{ groupname }}" ng-style="getPronosticStyle(groupname, 2)" class="group__pronostic"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-repeat="round in palmares" ng-class="getRoundClass($index)" ng-init="roundIdx = $index">
+                <div ng-class="getMatchClass(roundIdx)" ng-repeat="match in round" ng-init="matchIdx = $index">
+                    <div class="col-xs-6" ng-repeat="team in match" style="padding:0;">
+                        <span ng-if="roundIdx === 0" class="group__name">{{ team.order }} {{ team.group }}</span>
+                        <div ng-click="selectWinner(roundIdx, matchIdx, $index)" class="team" ng-style="getTeamStyle(roundIdx, matchIdx, $index)">
+                            {{ getCountryName(roundIdx, matchIdx, $index) }}
+                        </div>
+                        <a ng-click="selectWinner(roundIdx, matchIdx, $index)" ng-style="getArrowStyle(roundIdx, matchIdx, $index)">
+                            <i class="fa fa-long-arrow-down fa-4x"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <!-- Chartbeat -->
+        <script type='text/javascript'>
+            var _sf_async_config={};
+                _sf_async_config.uid = 43601;
+                _sf_async_config.domain = 'liberation.fr';
+                _sf_async_config.useCanonical = true;
+                _sf_async_config.sections = "Static";
+                _sf_async_config.authors = "Static";
+                (function(){
+                    function loadChartbeat() {
+                        window._sf_endpt=(new Date()).getTime();
+                        var e = document.createElement('script');
+                        e.setAttribute('language', 'javascript');
+                        e.setAttribute('type', 'text/javascript');
+                        e.setAttribute('src', 'http://static.chartbeat.com/' + 'js/chartbeat.js');
+                        document.body.appendChild(e);
+                    }
+                    var oldonload = window.onload;
+                    window.onload = (typeof window.onload != 'function') ?
+                    loadChartbeat : function() { oldonload(); loadChartbeat();
+                };
+            })();
+        </script>
+        <!-- // Chartbeat -->
+
+        <!-- Google Analytics -->
+        <script>
+            (function(p,a,u,l,L,o,z){p['GoogleAnalyticsObject']=L;p[L]=p[L]||function(){
+            (p[L].q=p[L].q||[]).push(arguments)},p[L].l=1*new Date();o=a.createElement(u),
+            z=a.getElementsByTagName(u)[0];o.async=1;o.src=l;z.parentNode.insertBefore(o,z)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-41822557-1', 'liberation.fr');
+            ga('send', 'pageview');
+        </script>
+        <!-- // Google Analytics -->
+
+        <!-- Xiti -->
+        <script type="text/javascript">
+            xtnv = document;        //parent.document or top.document or document
+            xtsd = "http://logliberation";
+            xtsite = "381060";
+            xtn2 = "48";        // level 2
+            xtpage = "2015::09::tu-mitonnes-ete";        //page name (with the use of :: to create chapters)
+            xtdi = "";
+            xt_pagetype = "";
+            xt_multc = "&x1=0&x2=43&x3=&x4=&x5=&x6=7&x7=";
+            xt_an = "";
+            xt_ac = "";
+            if (window.xtparam==null) { window.xtparam = ''; }
+            window.xtparam += "&ptype="+xt_pagetype+"&ac="+xt_ac+"&an="+xt_an+xt_multc;
+        </script>
+        <noscript>
+            <img width="1" height="1" src="http://logliberation.xiti.com/hit.xiti?s=381060&amp;s2=56&amp;p=2015::09::tu-mitonnes-ete&amp;di=&amp;" >
+        </noscript>
+        <script type="text/javascript" src="http://s1.libe.com/bloom/theme/js/xtcore.js"></script>
+        <!-- // Xiti -->
+    </body>
+</html>

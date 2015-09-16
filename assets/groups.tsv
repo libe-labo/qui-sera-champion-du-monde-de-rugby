@@ -1,0 +1,21 @@
+Id	Pays	Groupe	Couleur	Couleur texte
+1	Australie	A	#F3A827	noir
+2	Angleterre	A	#FF7099	noir
+3	Galles	A	#FF0016	blanc
+4	Fidji	A	#505050	blanc
+5	Uruguay	A	#7CC8DD	blanc
+6	Afrique-du-Sud	B	#004940	blanc
+7	Samoa	B	#5842B7	blanc
+8	Japon	B	#FC4F5A	noir
+9	Ecosse	B	#160060	blanc
+10	Etats-Unis	B	#9F1737	blanc
+11	Nouvelle-Zélande	C	#000000	blanc
+12	Argentine	C	#BEDEE5	noir
+13	Tonga	C	#E85736	noir
+14	Géorgie	C	#B50000	blanc
+15	Namibie	C	#266CE2	blanc
+16	France	D	#0042AA	blanc
+17	Irlande	D	#14916D	blanc
+18	Italie	D	#00BDFF	noir
+19	Canada	D	#DC1F1E	blanc
+20	Roumanie	D	#FFCD00	noir

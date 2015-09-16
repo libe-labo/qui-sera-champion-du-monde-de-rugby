@@ -1,0 +1,179 @@
+@import (inline, css) 'fonts.css';
+
+@libepink: #e3234a;
+
+#container {
+    margin-top: 50px;
+
+    .title {
+        margin-bottom: 4em;
+
+        h1 {
+            font-family: 'libesansweb-semicondensed', sans-serif;
+            font-size: 4em;
+            font-weight: bold;
+            color: @libepink;
+            text-align: center;
+            letter-spacing: .05em;
+        }
+
+        p {
+            width: 75%;
+            margin: 0 auto;
+
+            font-family: 'syntheselibeweb', sans-serif;
+        }
+
+        &__chapo {
+            color: @libepink;
+        }
+
+        &__man {
+            font-size: 1.2em;
+        }
+    }
+
+    .group {
+        text-align: center;
+
+        &__name {
+            font-family: 'libesansweb-semicondensed', sans-serif;
+            font-size: 2em;
+            font-weight: bold;
+            color: #c6c6c6;
+            text-align: center;
+        }
+
+        &__inner {
+            padding: 1em;
+
+            background-color: #f4f4f4;
+
+            text-align: left;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        &__flags {
+            padding: 0;
+            margin: 0 auto 1.5em auto;
+        }
+
+        &__flag {
+            display: inline-block;
+            list-style-type: none;
+
+            width: 33%;
+            margin-top: 0.5em;
+
+            cursor: move;
+
+            &:nth-child(4) {
+                margin-left: 33px;
+            }
+
+            img {
+                width: 100%;
+            }
+
+            span {
+                display: none;
+            }
+        }
+
+        &__pronostics {
+            padding: 0 15%;
+        }
+
+        &__pronostic {
+            display: block;
+
+            width: 100%;
+            height: 2em;
+            margin-bottom: .5em;
+
+            font-family: 'libesansweb-semicondensed', sans-serif;
+            font-weight: bold;
+            text-align: center;
+
+            &--empty {
+                background-color: #c6c6c6;
+            }
+
+            img {
+                display: none;
+            }
+
+            li {
+                display: none;
+
+                width: 100%;
+                padding: 0;
+                margin: 0;
+
+                font-size: 1.4em;
+
+                &:last-of-type {
+                    display: inline-block;
+                }
+
+                span {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    .quarterfinals {
+        margin-top: 3em;
+    }
+
+    .winner {
+        overflow-x: hidden;
+
+        > div {
+            padding: 0;
+        }
+
+        .team {
+            height: auto;
+        }
+    }
+
+    .quarterfinals, .semifinals, .final, .winner {
+        text-align: center;
+
+        .group__name {
+            font-size: 1.5em;
+        }
+
+        .team {
+            display: block;
+
+            width: 100%;
+            height: 2em;
+
+            font-family: 'libesansweb-semicondensed', sans-serif;
+            font-weight: bold;
+            font-size: 1.4em;
+            line-height: 2em;
+
+            cursor: pointer;
+        }
+
+        a {
+            color: #c6c6c6;
+            cursor: pointer;
+        }
+    }
+}
+
+.group__flag {
+    list-style-type: none;
+
+    span {
+        display: none;
+    }
+}
