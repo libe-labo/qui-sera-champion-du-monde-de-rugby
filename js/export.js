@@ -80,14 +80,14 @@ $(function() {
 
         var createLabels = function(data, outerRadius, globalIdx) {
             _.each(data, function(d) {
-                d.startAngle -= (Math.PI / 2);
-                d.endAngle -= (Math.PI / 2);
+                d.startAngle -= (Math.PI / 2); // DON'T KNOW, DON'T ASK
+                d.endAngle -= (Math.PI / 2);   // DON'T KNOW, DON'T ASK
 
                 d.midAngle = d.startAngle + ((d.endAngle - d.startAngle) / 2);
             });
             var cl = 'text' + String(globalIdx + 1);
             arcs.selectAll('.' + cl).data(data).enter()
-                .append('text').attr('class', cl).text(function(d) { return d.data.label; })
+                .append('text').attr('class', cl)
                                .attr('x', function(d) {
                                    return Math.cos(d.midAngle) * (outerRadius - width * 0.7);
                                }).attr('y', function(d) {
@@ -101,10 +101,11 @@ $(function() {
                                         String(d3.select(this).attr('x')) + ' ' +
                                         String(d3.select(this).attr('y')) + ' ' +
                                    ')';
-                               });
+                               }).text(function(d) { return d.data.label; });
         };
 
         var createArcs = function(globalIdx) {
+            outerRadius -= width;
             var cl = 'arc' + String(globalIdx);
             arcs.selectAll('.' + cl).data(pie(data)).enter()
                 .append('path').attr('class', cl)
@@ -137,8 +138,9 @@ $(function() {
         pie.startAngle(-pie(data)[0].endAngle);
         pie.endAngle(pie.startAngle() + (Math.PI * 2));
 
-        var outerRadius = (size / 2) - width;
+        var outerRadius = (size / 2);
         createArcs(1);
+
         createLabels(pie(data), outerRadius, 0);
 
         k = 0; data = [];
@@ -151,7 +153,6 @@ $(function() {
             ++k;
         }
         data.push({ value : 2 , order : j , color : 'transparent' });
-        outerRadius -= width;
         createArcs(2);
         createLabels(pie(data), outerRadius, 1);
 
@@ -165,7 +166,6 @@ $(function() {
             data.push({ value : 50 , order : j , textColor : theData[2][j].textColor ,
                         color : theData[2][j].color , label : theData[2][j].country });
         }
-        outerRadius -= width;
         createArcs(3);
         createLabels(pie(data), outerRadius, 2);
 
