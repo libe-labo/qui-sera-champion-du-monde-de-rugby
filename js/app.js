@@ -207,7 +207,6 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                 }
             });
         });
-
     });
 
     /*
@@ -218,11 +217,27 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         $scope.selectModels[groupname] = ['', ''];
     });
 
-    $scope.onSelectChange = function(groupname, order) {
+    $scope.onSelectChange = function(group, order) {
         var other = order > 0 ? 0 : 1;
+        var team = _.find($scope.groups[group], { slug : $scope.selectModels[group][order] }),
+            oldTeam = _.find($scope.groups[group], { order : order + 1 });
 
-        if ($scope.selectModels[groupname][other] == $scope.selectModels[groupname][order]) {
-            $scope.selectModels[groupname][other] = '';
+        if (oldTeam != null) {
+            oldTeam.order = -1;
+        }
+
+        for (var i = 0; i < $scope.palmares[0].length; ++i) {
+            for (var j = 0; j < $scope.palmares[0][i].length; ++j) {
+                if ($scope.palmares[0][i][j].group === group &&
+                    $scope.palmares[0][i][j].order === order + 1) {
+                    emptyPalmaresFrom(0, i, j);
+                }
+            }
+        }
+
+        team.order = order + 1;
+        if ($scope.selectModels[group][other] == $scope.selectModels[group][order]) {
+            $scope.selectModels[group][other] = '';
         }
     };
 }]);
