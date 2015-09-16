@@ -94,7 +94,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
 
     $scope.getCountryName = function(roundIdx, matchIdx, teamIdx, small) {
         var team = getTeamFor(roundIdx, matchIdx, teamIdx);
-        return team == null ? '' : (small ? team.initials : team.country);
+        return team == null ? '' : (small && roundIdx < 2 ? team.initials : team.country);
     };
 
     $scope.refresh = function() {
