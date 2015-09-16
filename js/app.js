@@ -183,7 +183,8 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         }
 
         window.open('https://twitter.com/intent/tweet?original_referer=' + '' +
-                    '&text=' + text + ' ' + url, '', 'width=575,height=400,menubar=no,toolbar=no');
+                    '&text=' + text + ' ' + url + ' via @libe_sixplus',
+                    '', 'width=575,height=400,menubar=no,toolbar=no');
     };
 
     $scope.shareOnFacebook = function() {
