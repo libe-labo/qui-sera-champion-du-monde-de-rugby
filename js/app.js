@@ -1,5 +1,5 @@
 /* jshint globalstrict: true, eqnull: true */
-/* globals angular, _, d3, S, $ */
+/* globals angular, _, d3, S, $, window */
 
 'use strict';
 
@@ -94,6 +94,10 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     $scope.getCountryName = function(roundIdx, matchIdx, teamIdx) {
         var team = getTeamFor(roundIdx, matchIdx, teamIdx);
         return team == null ? '' : team.country;
+    };
+
+    $scope.refresh = function() {
+        window.location.reload();
     };
 
     /*
