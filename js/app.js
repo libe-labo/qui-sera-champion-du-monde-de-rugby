@@ -65,28 +65,35 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         });
         $scope.groups = _.groupBy(allTeams, 'group');
 
+        $scope.locked = false;
+
         /*
         ** Init from URL
         */
         window.setTimeout(function() {
             $scope.$apply(function() {
+                var before8 = function(id, idx) {
+                    var team = _.find(allTeams, { id : id });
+                    team.order = (idx % 2) ? 2 : 1;
+
+                    $('.group__flag[x-team="' + team.id +'"]')
+                        .clone()
+                        .appendTo($('.group__pronostics ' +
+                                     'li[x-group="' + team.group + '"]')
+                            .get((idx % 2) ? 1 : 0));
+
+                    $scope.selectModels[team.group][idx % 2] = team.slug;
+                };
+
                 _.each(window.location.search.replace(/^\?/, '').split('&'), function(search) {
                     search = search.split('=');
                     if (search[0] === 'p') {
                         var ids = search[1].split(';');
                         if (ids.length === 15) {
                             _.each(ids, function(id, idx) {
-                                var team = _.find(allTeams,{ id : parseInt(id) });
+                                var team = _.find(allTeams, { id : parseInt(id) });
                                 if (idx < 8) {
-                                    team.order = (idx % 2) ? 2 : 1;
-
-                                    $('.group__flag[x-team="' + team.id +'"]')
-                                        .clone()
-                                        .appendTo($('.group__pronostics ' +
-                                                     'li[x-group="' + team.group + '"]')
-                                            .get((idx % 2) ? 1 : 0));
-
-                                    $scope.selectModels[team.group][idx % 2] = team.slug;
+                                    before8(parseInt(id), idx);
                                 } else if (idx < 12) {
                                     var map = [0, 0, 1, 1];
                                     $scope.palmares[1][map[idx - 8]][idx % 2].group = team.group;
@@ -100,6 +107,13 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                                 }
                             });
                         }
+                    } else {
+                        // Real quarterfinals
+                        $scope.locked = true;
+                        var quarterfinals = [6, 3, 11, 16, 17, 12, 1, 9];
+                        _.each(quarterfinals, function(id, idx) {
+                            before8(id, idx);
+                        });
                     }
                 });
             });
@@ -262,9 +276,11 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     $scope.dragularOptions = {
         copy : true,
         canBeAccepted : function(el, target, source) {
-            if ($(target).hasClass('group__pronostic')) {
-                if ($(source).attr('x-group') === $(target).attr('x-group')) {
-                    return true;
+            if (!$scope.locked) {
+                if ($(target).hasClass('group__pronostic')) {
+                    if ($(source).attr('x-group') === $(target).attr('x-group')) {
+                        return true;
+                    }
                 }
             }
             return false;
