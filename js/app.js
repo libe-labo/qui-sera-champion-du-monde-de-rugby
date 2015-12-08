@@ -91,37 +91,55 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         window.setTimeout(function() {
             $scope.$apply(function() {
                 var before8 = function(id, idx) {
+                    var map = [2, 2, 1, 3, 1, 3, 1, 2, 1, 3, 1, 2, 1, 3, 2, 2];
                     var team = _.find(allTeams, { id : id });
-                    team.order = (idx % 2) ? 2 : 1;
+                    team.order = map[idx];
 
-                    $('.group__flag[x-team="' + team.id +'"]')
-                        .clone()
-                        .appendTo($('.group__pronostics ' +
-                                     'li[x-group="' + team.group + '"]')
-                            .get((idx % 2) ? 1 : 0));
+                    var clone = $('.group__flag[x-team="' + team.id +'"]').clone();
 
-                    $scope.selectModels[team.group][idx % 2] = team.slug;
+                    if (team.order === 3) {
+                        clone.appendTo(
+                            $('.drop2').find('.group__pronostic').get($scope.thirds.length)
+                        );
+                        $scope.thirds.push(team.group);
+                        if ($scope.thirds.join('').length === 4) {
+                            if (!$scope.updateWithThirds()) {
+                                window.location.search = '';
+                            }
+                        }
+                    } else {
+                        clone.appendTo(
+                            $('.group__pronostics>' + 'li[x-group="' + team.group + '"]')
+                                .get(team.order - 1)
+                        );
+
+                        // $scope.selectModels[team.group][idx % 2] = team.slug;
+                    }
+
                 };
 
                 _.each(window.location.search.replace(/^\?/, '').split('&'), function(search) {
                     search = search.split('=');
                     if (search[0] === 'p') {
                         var ids = search[1].split(';');
-                        if (ids.length === 15) {
+                        if (ids.length === 31) {
                             _.each(ids, function(id, idx) {
                                 var team = _.find(allTeams, { id : parseInt(id) });
-                                if (idx < 8) {
+                                if (idx < 16) {
                                     before8(parseInt(id), idx);
-                                } else if (idx < 12) {
-                                    var map = [0, 0, 1, 1];
-                                    $scope.palmares[1][map[idx - 8]][idx % 2].group = team.group;
-                                    $scope.palmares[1][map[idx - 8]][idx % 2].order = team.order;
-                                } else if (idx < 14) {
-                                    $scope.palmares[2][0][idx % 2].group = team.group;
-                                    $scope.palmares[2][0][idx % 2].order = team.order;
+                                } else if (idx < 24) {
+                                    var map = [0, 0, 1, 1, 2, 2, 3, 3];
+                                    $scope.palmares[1][map[idx - 16]][idx % 2].group = team.group;
+                                    $scope.palmares[1][map[idx - 16]][idx % 2].order = team.order;
+                                } else if (idx < 28) {
+                                    $scope.palmares[2][idx < 26 ? 0 : 1][idx %2].group = team.group;
+                                    $scope.palmares[2][idx < 26 ? 0 : 1][idx %2].order = team.order;
+                                } else if (idx < 30) {
+                                    $scope.palmares[3][0][idx % 2].group = team.group;
+                                    $scope.palmares[3][0][idx % 2].order = team.order;
                                 } else {
-                                    $scope.palmares[3][0][0].group = team.group;
-                                    $scope.palmares[3][0][0].order = team.order;
+                                    $scope.palmares[4][0][0].group = team.group;
+                                    $scope.palmares[4][0][0].order = team.order;
                                 }
                             });
                         }
