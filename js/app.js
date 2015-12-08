@@ -291,6 +291,28 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         return { color : '#c6c6c6' };
     };
 
+    $scope.getDrop2Style = function(idx) {
+        return {
+            'col-md-offset-2': idx === 0
+        };
+    };
+
+    $scope.getPronostic2Style = function(idx) {
+        var team = null;
+        if ($scope.thirds[idx] != null) {
+            _.each($scope.groups[$scope.thirds[idx]], function(t) {
+                if (t.order === 3) {
+                    team = t;
+                }
+            });
+        }
+
+        return {
+            'background-color' : team == null ? '#c6c6c6' : team.color,
+            'color' : team == null ? '' : team.textColor
+        };
+    };
+
     /*
     ** Dragular
     */
@@ -299,6 +321,9 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         canBeAccepted : function(el, target, source) {
             if (!$scope.locked) {
                 if ($(target).hasClass('group__pronostic')) {
+                    if (['0', '1', '2', '3'].indexOf($(target).attr('x-position')) >= 0) {
+                        return true;
+                    }
                     if ($(source).attr('x-group') === $(target).attr('x-group')) {
                         return true;
                     }
@@ -314,15 +339,36 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     };
 
     $scope.$on('dragulardrop', function(event, el, container, source) {
-        var group = $(container).attr('x-group');
+        var group = $(container).attr('x-group'),
+            isThird = group == null;
+
         // Make sure we didn't use the same country twice
-        $(container).siblings().each(function() {
+        var noDups = function(all) {
+            if (this == container) { return; }
             $(this).children().each(function() {
                 if ($(this).find('span').text() === $(el).find('span').text()) {
                     $(this).remove();
                 }
+                if ($(this).parent('*[x-position]').length > 0) {
+                    if (isThird && $(this).attr('x-group') === $(el).attr('x-group')) {
+                        $(this).remove();
+                    }
+                }
             });
-        });
+        };
+
+        $('.drop2').children().find('li').each(noDups);
+        $('.group__pronostics').children().each(noDups);
+        if (isThird) {
+            group = $(el).attr('x-group');
+            $('.group__pronostics').each(function() {
+                if ($(this).children().first().attr('x-group') === group) {
+                    container = $(this).children().first();
+                }
+            });
+        } else {
+            $(container).siblings().each(noDups);
+        }
 
         // Make sure we only have one item in this container
         $(container).children().each(function(idx) {
@@ -333,26 +379,82 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
 
         // Update our data
         $scope.$apply(function() {
-            _.each($scope.groups[group], function(d) { d.order = -1; });
+            if (!isThird) {
+                _.each($scope.groups[group], function(d) { d.order = -1; });
+            }
             $(container).parent().children().each(function(idx) {
                 var country = $(this).find('span').text(),
-                    team = _.find($scope.groups[group], { country : country });
+                    team = _.find($scope.groups[group], { initials : country });
                 if (team != null) {
                     if (team.order !== idx + 1) {
-                        for (var i = 0; i < $scope.palmares[0].length; ++i) {
-                            for (var j = 0; j < $scope.palmares[0][i].length; ++j) {
-                                if ($scope.palmares[0][i][j].group === group &&
-                                    $scope.palmares[0][i][j].order === idx + 1) {
-                                    emptyPalmaresFrom(0, i, j);
-                                }
-                            }
-                        }
                         team.order = idx + 1;
                     }
                 }
             });
+            for (var i = 0; i < $scope.palmares[0].length; ++i) {
+                for (var j = 0; j < $scope.palmares[0][i].length; ++j) {
+                    emptyPalmaresFrom(0, i, j);
+                }
+            }
+
+            $scope.thirds = [undefined, undefined, undefined, undefined];
+            _.each($scope.groups, function(teams) {
+                _.each(teams, function(team) {
+                    if (team.order === 3) {
+                        team.order = -1;
+                    }
+                });
+            });
+            $('.drop2').find('li[x-team]').each(function() {
+                var $this = $(this);
+                _.each($scope.groups[$this.attr('x-group')], function(team) {
+                    if (team.initials === $this.find('span').text()) {
+                        team.order = 3;
+                        $scope.thirds[parseInt($this.parent().attr('x-position'))] = team.group;
+                    }
+                });
+            });
+
+            $scope.updateWithThirds();
         });
     });
+
+    /*
+    ** Update
+    */
+    $scope.updateWithThirds = function() {
+        var mapThirds = {
+            ABCD : ['C', 'D', 'A', 'B'],
+            ABCE : ['C', 'A', 'B', 'E'],
+            ABCF : ['C', 'A', 'B', 'F'],
+            ABDE : ['D', 'A', 'B', 'E'],
+            ABDF : ['D', 'A', 'B', 'F'],
+            ABEF : ['E', 'A', 'B', 'F'],
+            ACDE : ['C', 'D', 'A', 'E'],
+            ACDF : ['C', 'D', 'A', 'F'],
+            ACEF : ['C', 'A', 'F', 'E'],
+            ADEF : ['D', 'A', 'F', 'E'],
+            BCDE : ['C', 'D', 'B', 'E'],
+            BCDF : ['C', 'D', 'B', 'F'],
+            BCEF : ['E', 'C', 'B', 'F'],
+            CDEF : ['C', 'D', 'F', 'E'],
+            _    : ['?', '?', '?', '?']
+        };
+
+        return function() {
+            var mapped = mapThirds._,
+                all = _.clone($scope.thirds).sort().join('');
+
+            if (all.length === 4) {
+                mapped = mapThirds[all];
+            }
+
+            $scope.palmares[0][1][1].group = mapped[0];
+            $scope.palmares[0][2][1].group = mapped[1];
+            $scope.palmares[0][4][1].group = mapped[2];
+            $scope.palmares[0][6][1].group = mapped[3];
+        };
+    }();
 
     /*
     ** Select

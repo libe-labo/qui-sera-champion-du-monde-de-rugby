@@ -70,6 +70,11 @@
                     </div>
                 </div>
             </div>
+            <div class="row drop2">
+                <div class="group group__inner col-md-5" ng-repeat="x in [0, 1, 2, 3]" ng-class="getDrop2Style(x)">
+                    <li dragular="dragularDropOptions" x-position="{{ x }}" ng-style="getPronostic2Style(x)" class="group__pronostic"></li>
+                </div>
+            </div>
             <div class="row" ng-repeat="round in palmares" ng-class="getRoundClass($index)" ng-init="roundIdx = $index">
                 <div ng-class="getMatchClass(roundIdx)" ng-repeat="match in round" ng-init="matchIdx = $index">
                     <div class="col-xs-12" ng-repeat="team in match" style="padding:0;">
