@@ -1,21 +1,25 @@
 Id	Pays	Initiales	Pays complet	Groupe	Couleur	Couleur texte
-1	Australie	Aus	Australie	A	#F3A827	blanc
-2	Angleterre	Ang	Angleterre	A	#FF7099	blanc
-3	Galles	Gal	Galles	A	#FF0016	blanc
-4	Fidji	Fidji	Fidji	A	#505050	blanc
-5	Uruguay	Uru	Uruguay	A	#7CC8DD	blanc
-6	Af.-du-Sud	AfSud	Afrique-du-Sud	B	#004940	blanc
-7	Samoa	Sam	Samoa	B	#5842B7	blanc
-8	Japon	Jap	Japon	B	#FC4F5A	blanc
-9	Ecosse	Eco	Ecosse	B	#160060	blanc
-10	Etats-Unis	USA	Etats-Unis	B	#9F1737	blanc
-11	Nlle-Zélande	N-Z	Nouvelle-Zélande	C	#000000	blanc
-12	Argentine	Arg	Argentine	C	#BEDEE5	gris
-13	Tonga	Ton	Tonga	C	#E85736	blanc
-14	Géorgie	Géo	Géorgie	C	#B50000	blanc
-15	Namibie	Nam	Namibie	C	#266CE2	blanc
-16	France	Fra	France	D	#0042AA	blanc
-17	Irlande	Irl	Irlande	D	#14916D	blanc
-18	Italie	Ita	Italie	D	#00BDFF	blanc
-19	Canada	Can	Canada	D	#DC1F1E	blanc
-20	Roumanie	Rou	Roumanie	D	#FFCD00	gris
+1	France	Fra	France	A	#1B1464	#FFFFFF
+2	Suisse	Sui	Suisse	A	#ED1C24	#FFFFFF
+3	Suède	Suè	Suède	A	#236CE2	#FFCD00
+4	Islande	Isl	Islande	A	#005CA9	#FF0016
+5	Espagne	Esp	Espagne	B	#DC1F1E	#FFCD00
+6	Russie	Rus	Russie	B	#860040	#FFFFFF
+7	Rép. tchèque	Rtc	République tchèque	B	#E30613	#160060
+8	Irlande	Irl	Irlande	B	#63B943	#FFFFFF
+9	Allemagne	All	Allemagne	C	#FFFFFF	#000000
+10	Italie	Ita	Italie	C	#29ABE2	#FFFFFF
+11	Pologne	Pol	Pologne	C	#B50000	#FFFFFF
+12	Turquie	Tur	Turquie	C	#FFFAF3	#9F1737
+13	Belgique	Bel	Belgique	D	#FFCD00	#DC1F1E
+14	Croatie	Cro	Croatie	D	#FFFAF3	#FF0016
+15	Hongrie	Hon	Hongrie	D	#007540	#FFFFFF
+16	Irlande du N.	IrlNord	Irlande du Nord	D	#FFFFFF	#009640
+17	Portugal	Por	Portugal	E	#C00016	#00BA40
+18	Autriche	Aut	Autriche	E	#FF0016	#000000
+19	Slovaquie	Svq	Slovaquie	E	#FFFFFF	#0042AA
+20	Albanie	Alb	Albanie	E	#000000	#FF0016
+21	Angleterre	Ang	Angleterre	F	#FF7099	#000000
+22	Ukraine	Ukr	Ukraine	F	#FFCD00	#0042AA
+23	Roumanie	Rou	Roumanie	F	#F3A827	#000000
+24	Galles	Gal	Galles	F	#00BA40	#C00016
