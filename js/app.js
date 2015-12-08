@@ -11,6 +11,7 @@ angular.module('app', ['dragularModule']).config(['$locationProvider', function(
 }]);
 
 angular.module('app').controller('RugbyController', ['$scope', '$http', function($scope, $http) {
+
     var allTeams = [undefined, undefined, undefined, undefined];
 
     $scope.groups = { 'A' : [] , 'B' : [] , 'C' : [] , 'D' : [] , 'E' : [] , 'F' : [] };
@@ -415,7 +416,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     /*
     ** Update
     */
-    $scope.updateWithThirds = function() {
+    $scope.updateWithThirds = (function() {
         var mapThirds = {
             ABCD : ['C', 'D', 'A', 'B'],
             ABCE : ['C', 'A', 'B', 'E'],
@@ -433,21 +434,25 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
             CDEF : ['C', 'D', 'F', 'E'],
             _    : ['?', '?', '?', '?']
         };
-
         return function() {
             var mapped = mapThirds._,
                 all = _.clone($scope.thirds).sort().join('');
 
             if (all.length === 4) {
                 mapped = mapThirds[all];
+                if (mapped == null) {
+                    return false;
+                }
             }
 
             $scope.palmares[0][1][1].group = mapped[0];
             $scope.palmares[0][2][1].group = mapped[1];
             $scope.palmares[0][4][1].group = mapped[2];
             $scope.palmares[0][6][1].group = mapped[3];
+
+            return true;
         };
-    }();
+    })();
 
     /*
     ** Select
