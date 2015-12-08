@@ -221,10 +221,11 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     $scope.tweet = function() {
         var url = encodeURIComponent(window.location.origin + window.location.pathname +
                                      '?p=' + getPalmaresString());
-        var text = encodeURIComponent('Qui voyez-vous remporter la Coupe du monde de rugby 2015 ?' +
-                                      ' Faites vos pronostics avec l\'application Libé !');
+        var text = encodeURIComponent('Qui va remporter l’Euro 2016 ?' +
+                                      'Faites vos pronostics avec l’application Libé !');
+
         if (getTeamFor(3, 0, 0) != null) {
-            text = encodeURIComponent('Mon pronostic pour la Coupe du monde de rugby #RWC2015 : ' +
+            text = encodeURIComponent('Mon pronostic pour l\'Euro 2016 : ' +
                                       getTeamFor(3, 0, 0).country + ' vainqueur ! Et vous ?');
         }
 
