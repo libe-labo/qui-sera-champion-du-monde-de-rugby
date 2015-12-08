@@ -49,12 +49,12 @@
                 <p class="title__man"></p>
             </div>
             <div class="row">
-                <div class="group col-md-3" ng-repeat="(groupname, group) in groups">
+                <div class="group col-md-4" ng-repeat="(groupname, group) in groups">
                     <span class="group__name">{{ groupname }}</span>
                     <div class="group__inner hidden-sm hidden-xs">
                         <ul x-group="{{ groupname }}"  class="group__flags" dragular="dragularOptions">
-                            <li x-team="{{ team.id }}" class="group__flag" ng-repeat="team in group">
-                                <span>{{ team.country }}</span>
+                            <li x-team="{{ team.id }}" x-group="{{ groupname }}" class="group__flag" ng-repeat="team in group">
+                                <span>{{ team.initials }}</span>
                                 <img title="{{ team.country }}" ng-src="assets/flags/{{ team.slug }}.png">
                             </li>
                         </ul>
@@ -72,7 +72,7 @@
             </div>
             <div class="row" ng-repeat="round in palmares" ng-class="getRoundClass($index)" ng-init="roundIdx = $index">
                 <div ng-class="getMatchClass(roundIdx)" ng-repeat="match in round" ng-init="matchIdx = $index">
-                    <div class="col-xs-6" ng-repeat="team in match" style="padding:0;">
+                    <div class="col-xs-12" ng-repeat="team in match" style="padding:0;">
                         <span ng-if="roundIdx === 0" class="group__name">{{ team.order }} {{ team.group }}</span>
                         <div ng-click="selectWinner(roundIdx, matchIdx, $index)" class="team" ng-style="getTeamStyle(roundIdx, matchIdx, $index)">
                             <span class="hidden-sm hidden-xs">{{ getCountryName(roundIdx, matchIdx, $index, false) }}</span>

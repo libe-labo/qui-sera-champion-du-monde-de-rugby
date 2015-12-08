@@ -1,7 +1,14 @@
 @import (inline, css) 'fonts.css';
-@import (inline, css) 'header.css';
 
 @libepink: #e3234a;
+
+html, body {
+    font-size: inherit !important;
+}
+
+.main-nav .close {
+    float: none !important;
+}
 
 body {
     background-color: #fff;
@@ -76,14 +83,12 @@ body {
             display: inline-block;
             list-style-type: none;
 
-            width: 33%;
+            padding: 5px;
+
+            width: 50%;
             margin-top: 0.5em;
 
             cursor: move;
-
-            &:nth-child(4) {
-                margin-left: 33px;
-            }
 
             img {
                 width: 100%;
@@ -137,7 +142,7 @@ body {
         }
     }
 
-    .quarterfinals {
+    .drop2, .eighthfinals {
         margin-top: 3em;
     }
 
@@ -162,7 +167,7 @@ body {
         }
     }
 
-    .quarterfinals, .semifinals, .final, .winner {
+    .eighthfinals, .quarterfinals, .semifinals, .final, .winner {
         text-align: center;
 
         .group__name {

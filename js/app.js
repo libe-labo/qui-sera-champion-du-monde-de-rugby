@@ -11,19 +11,30 @@ angular.module('app', ['dragularModule']).config(['$locationProvider', function(
 }]);
 
 angular.module('app').controller('RugbyController', ['$scope', '$http', function($scope, $http) {
-    var allTeams = [];
+    var allTeams = [undefined, undefined, undefined, undefined];
 
-    $scope.groups = { 'A' : [] , 'B' : [] , 'C' : [] , 'D' : [] };
+    $scope.groups = { 'A' : [] , 'B' : [] , 'C' : [] , 'D' : [] , 'E' : [] , 'F' : [] };
+    $scope.thirds = [];
     $scope.palmares = [
         [
-            [{ group : 'B' , order : 1 } , { group : 'A' , order : 2}],
-            [{ group : 'C' , order : 1 } , { group : 'D' , order : 2}],
-            [{ group : 'D' , order : 1 } , { group : 'C' , order : 2}],
-            [{ group : 'A' , order : 1 } , { group : 'B' , order : 2}]
+            [{ group : 'A' , order : 2 } , { group : 'C' , order : 2}],
+            [{ group : 'D' , order : 1 } , { group : '?' , order : 3}],
+            [{ group : 'B' , order : 1 } , { group : '?' , order : 3}],
+            [{ group : 'F' , order : 1 } , { group : 'E' , order : 2}],
+            [{ group : 'C' , order : 1 } , { group : '?' , order : 3}],
+            [{ group : 'E' , order : 1 } , { group : 'D' , order : 2}],
+            [{ group : 'A' , order : 1 } , { group : '?' , order : 3}],
+            [{ group : 'B' , order : 2 } , { group : 'F' , order : 2}]
         ],
         [
             [{} , {}],
+            [{} , {}],
+            [{} , {}],
             [{} , {}]
+        ],
+        [
+            [{}, {}],
+            [{}, {}]
         ],
         [
             [{}, {}]
@@ -36,10 +47,16 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     // Mapping one round to the next one
     $scope.mapping = [
         [
-            [[0, 0], [0, 0]], [[0, 1], [0, 1]], [[1, 0], [1, 0]], [[1, 1], [1, 1]]
+            [[0, 0], [0, 0]], [[0, 1], [0, 1]], [[1, 0], [1, 0]], [[1, 1], [1, 1]],
+            [[2, 0], [2, 0]], [[2, 1], [2, 1]], [[3, 0], [3, 0]], [[3, 1], [3, 1]]
         ],
         [
-            [[0, 0], [0, 0]], [[0, 1], [0, 1]]
+            [[0, 0], [0, 0]], [[0, 1], [0, 1]],
+            [[1, 0], [1, 0]], [[1, 1], [1, 1]]
+        ],
+        [
+            [[0, 0], [0, 0]],
+            [[0, 1], [0, 1]]
         ],
         [
             [[0, 0], [0, 0]]
@@ -57,7 +74,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                 fullcountry : d['Pays complet'],
 
                 color : d.Couleur,
-                textColor : d['Couleur texte'] === 'blanc' ? '#f4f4f4' : 'rgb(51, 51, 51)',
+                textColor : d['Couleur texte'],
                 slug : S(d.Pays).slugify().s,
 
                 order : -1
@@ -168,9 +185,12 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
 
     $scope.getCountryName = function(roundIdx, matchIdx, teamIdx, small) {
         var team = getTeamFor(roundIdx, matchIdx, teamIdx);
-        return team == null ? '' : (small && roundIdx < 2 ? team.initials
-                                                          : roundIdx < 2 ? team.country
-                                                                         : team.fullcountry);
+        return team == null
+            ? ''
+            : (small && roundIdx < 2 ? team.initials
+                                     : roundIdx < 2 ? team.initials
+                                                    : roundIdx < 3 ? team.country
+                                                                   : team.fullcountry);
     };
 
     $scope.export = function() {
@@ -220,14 +240,15 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     ** Scope class functions
     */
     $scope.getRoundClass = (function() {
-        var rounds = ['quarterfinals', 'semifinals', 'final', 'winner'];
+        var rounds = ['eighthfinals', 'quarterfinals', 'semifinals', 'final', 'winner'];
         return function(idx) {
             return rounds[idx];
         };
     })();
 
     $scope.getMatchClass = (function() {
-        var classes = ['col-xs-3', 'col-xs-6', 'col-xs-12', 'col-xs-12 col-xs-offset-3'];
+        var classes = ['col-xs-3', 'col-xs-6', 'col-xs-12', 'col-xs-24',
+                       'col-xs-24 col-xs-offset-6'];
         return function(idx) {
             return classes[idx];
         };
@@ -257,7 +278,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     };
 
     $scope.getArrowStyle = function(roundIdx, matchIdx, teamIdx) {
-        if (roundIdx > 2) { return { display : 'none' }; }
+        if (roundIdx > 3) { return { display : 'none' }; }
         if ($scope.palmares[roundIdx + 1] == null) { return { color : '#c6c6c6' }; }
 
         var team = getTeamFor(roundIdx, matchIdx, teamIdx),
