@@ -124,13 +124,6 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                                 }
                             });
                         }
-                    } else {
-                        // Real quarterfinals
-                        $scope.locked = true;
-                        var quarterfinals = [6, 3, 11, 16, 17, 12, 1, 9];
-                        _.each(quarterfinals, function(id, idx) {
-                            before8(id, idx);
-                        });
                     }
                 });
             });
