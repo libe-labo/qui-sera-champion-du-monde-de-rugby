@@ -75,11 +75,18 @@
                 </div>
             </div>
             <div class="row drop2">
+                <p style="text-align:center;">Choisissez vos meilleurs troisièmes</p>
                 <div class="group group__inner col-md-5 hidden-sm hidden-xs" ng-repeat="x in [0, 1, 2, 3]" ng-class="getDrop2Style(x)">
                     <li dragular="dragularDropOptions" x-position="{{ x }}" ng-style="getPronostic2Style(x)" class="group__pronostic"></li>
                 </div>
+                <div class="group__inner visible-sm visible-xs">
+                    <select ng-disabled="locked" class="form-control" ng-repeat="x in [0, 1, 2, 3]" ng-model="selectModels[x]" ng-change="onSelect2Change(x)" ng-options="team.slug as team.country for team in allTeams">
+                        <option value="">--</option>
+                    </select>
+                </div>
             </div>
             <div class="row" ng-repeat="round in palmares" ng-class="getRoundClass($index)" ng-init="roundIdx = $index">
+                <p ng-if="$index===0" style="text-align:center;" class="visible-sm visible-xs">Huitièmes de finale</p>
                 <div ng-class="getMatchClass(roundIdx)" ng-repeat="match in round" ng-init="matchIdx = $index">
                     <div class="col-xs-12" ng-repeat="team in match" style="padding:0;">
                         <span ng-if="roundIdx === 0" class="group__name">{{ team.order }} {{ team.group }}</span>

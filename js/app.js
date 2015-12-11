@@ -63,7 +63,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     ];
 
     $http.get('assets/groups.tsv').then(function(response) {
-        allTeams = d3.tsv.parse(response.data, function(d) {
+        $scope.allTeams = d3.tsv.parse(response.data, function(d) {
             return {
                 id : +d.Id,
 
@@ -79,7 +79,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                 order : -1
             };
         });
-        $scope.groups = _.groupBy(allTeams, 'group');
+        $scope.groups = _.groupBy($scope.allTeams, 'group');
 
         $scope.locked = false;
 
@@ -90,7 +90,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
             $scope.$apply(function() {
                 var before8 = function(id, idx) {
                     var map = [2, 2, 1, 3, 1, 3, 1, 2, 1, 3, 1, 2, 1, 3, 2, 2];
-                    var team = _.find(allTeams, { id : id });
+                    var team = _.find($scope.allTeams, { id : id });
                     team.order = map[idx];
 
                     var clone = $('.group__flag[x-team="' + team.id +'"]').clone();
@@ -105,13 +105,15 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                                 window.location.search = '';
                             }
                         }
+                        $scope.selectModels[$scope.thirds.length - 1] = team.slug;
+
                     } else {
                         clone.appendTo(
                             $('.group__pronostics>' + 'li[x-group="' + team.group + '"]')
                                 .get(team.order - 1)
                         );
 
-                        // $scope.selectModels[team.group][idx % 2] = team.slug;
+                        $scope.selectModels[team.group][team.order - 1] = team.slug;
                     }
 
                 };
@@ -122,7 +124,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
                         var ids = search[1].split(';');
                         if (ids.length === 31) {
                             _.each(ids, function(id, idx) {
-                                var team = _.find(allTeams, { id : parseInt(id) });
+                                var team = _.find($scope.allTeams, { id : parseInt(id) });
                                 if (idx < 16) {
                                     before8(parseInt(id), idx);
                                 } else if (idx < 24) {
@@ -480,7 +482,7 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     /*
     ** Select
     */
-    $scope.selectModels = {};
+    $scope.selectModels = { 0: '', 1: '', 2: '', 3: '' };
     _.each($scope.groups, function(group, groupname) {
         $scope.selectModels[groupname] = ['', ''];
     });
@@ -507,5 +509,59 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         if ($scope.selectModels[group][other] == $scope.selectModels[group][order]) {
             $scope.selectModels[group][other] = '';
         }
+
+        _.each(_.range(4), function(x) {
+            if ($scope.selectModels[x] === $scope.selectModels[group][order]) {
+                $scope.thirds[x] = undefined;
+                $scope.selectModels[x] = '';
+            }
+        });
+
+        $scope.updateWithThirds();
+    };
+
+    var getTeam = function(a, b) {
+        if (b != null) {
+            for (var i = 0; i < $scope.groups[a].length; ++i) {
+                if ($scope.groups[a][i].order === b) {
+                    return $scope.groups[a][i];
+                }
+            }
+        } else {
+            for (var i = 0; i < $scope.allTeams.length; ++i) {
+                if ($scope.allTeams[i].slug === a) {
+                    return $scope.allTeams[i];
+                }
+            }
+        }
+    };
+    $scope.onSelect2Change = function(pos) {
+        if ($scope.thirds[pos] != null) {
+            getTeam($scope.thirds[pos], 3).order = -1;
+        }
+
+        var team = getTeam($scope.selectModels[pos]);
+        team.order = 3;
+        $scope.thirds[pos] = team.group;
+
+        _.each(_.range(2), function(x) {
+            if ($scope.selectModels[team.group][x] !== ''
+             && $scope.selectModels[team.group][x] === $scope.selectModels[pos]) {
+                $scope.selectModels[team.group][x] = '';
+            }
+        });
+
+        _.each(_.range(4), function(x) {
+            if (x !== pos && $scope.selectModels[x] !== '') {
+                var otherTeam = getTeam($scope.thirds[x], 3);
+                if ($scope.selectModels[x] === $scope.selectModels[pos]
+                 || otherTeam.group === team.group) {
+                    $scope.thirds[x] = undefined;
+                    $scope.selectModels[x] = '';
+                }
+            }
+        });
+
+        $scope.updateWithThirds();
     };
 }]);
