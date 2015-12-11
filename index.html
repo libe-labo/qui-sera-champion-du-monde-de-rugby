@@ -59,7 +59,7 @@
                         <ul x-group="{{ groupname }}"  class="group__flags" dragular="dragularOptions">
                             <li x-team="{{ team.id }}" x-group="{{ groupname }}" class="group__flag" ng-repeat="team in group">
                                 <span>{{ team.initials }}</span>
-                                <img title="{{ team.country }}" ng-src="assets/flags/{{ team.slug }}.png">
+                                <img title="{{ team.fullcountry }}" ng-src="assets/flags/{{ team.slug }}.png">
                             </li>
                         </ul>
                         <ul class="group__pronostics">

@@ -5,21 +5,21 @@ Id	Pays	Initiales	Pays complet	Groupe	Couleur	Couleur texte
 4	Islande	Isl	Islande	A	#005CA9	#FF0016
 5	Espagne	Esp	Espagne	B	#DC1F1E	#FFCD00
 6	Russie	Rus	Russie	B	#860040	#FFFFFF
-7	Rép. tchèque	Rtc	République tchèque	B	#E30613	#160060
+7	R. tchèque	Rtc	République tchèque	B	#E30613	#160060
 8	Irlande	Irl	Irlande	B	#63B943	#FFFFFF
-9	Allemagne	All	Allemagne	C	#FFFFFF	#000000
+9	Allemagne	All	Allemagne	C	#FFFAF3	#000000
 10	Italie	Ita	Italie	C	#29ABE2	#FFFFFF
 11	Pologne	Pol	Pologne	C	#B50000	#FFFFFF
 12	Turquie	Tur	Turquie	C	#FFFAF3	#9F1737
 13	Belgique	Bel	Belgique	D	#FFCD00	#DC1F1E
 14	Croatie	Cro	Croatie	D	#FFFAF3	#FF0016
 15	Hongrie	Hon	Hongrie	D	#007540	#FFFFFF
-16	Irlande du N.	IrlNord	Irlande du Nord	D	#FFFFFF	#009640
+16	Irl. du Nord	IrlN	Irlande du Nord	D	#FFFAF3	#009640
 17	Portugal	Por	Portugal	E	#C00016	#00BA40
 18	Autriche	Aut	Autriche	E	#FF0016	#000000
-19	Slovaquie	Svq	Slovaquie	E	#FFFFFF	#0042AA
+19	Slovaquie	Svq	Slovaquie	E	#FFFAF3	#0042AA
 20	Albanie	Alb	Albanie	E	#000000	#FF0016
 21	Angleterre	Ang	Angleterre	F	#FF7099	#000000
 22	Ukraine	Ukr	Ukraine	F	#FFCD00	#0042AA
 23	Roumanie	Rou	Roumanie	F	#F3A827	#000000
-24	Galles	Gal	Galles	F	#00BA40	#C00016
+24	Galles	Gal	Galles	F	#00BA40	#000000
