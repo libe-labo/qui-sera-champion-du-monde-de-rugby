@@ -87,16 +87,16 @@
                             <span class="hidden-sm hidden-xs">{{ getCountryName(roundIdx, matchIdx, $index, false) }}</span>
                             <span class="visible-sm visible-xs">{{ getCountryName(roundIdx, matchIdx, $index, true) }}</span>
                         </div>
-                        <a ng-click="selectWinner(roundIdx, matchIdx, $index)" ng-style="getArrowStyle(roundIdx, matchIdx, $index)">
+                        <a class="arrow" ng-click="selectWinner(roundIdx, matchIdx, $index)" ng-style="getArrowStyle(roundIdx, matchIdx, $index)">
                             <i class="fa fa-long-arrow-down fa-4x"></i>
                         </a>
                     </div>
                 </div>
             </div>
             <p class="buttons">
-                <button type="button" ng-click="export()">
+                <!-- <button type="button" ng-click="export()">
                     <i class="fa fa-download"></i> Télécharger mon pronostic
-                </button>
+                </button> -->
                 <button type="button" ng-click="tweet()">
                     <i class="fa fa-twitter"></i> Tweeter
                 </button>

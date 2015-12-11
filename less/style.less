@@ -15,8 +15,6 @@ body {
 }
 
 #container {
-    margin-top: 50px;
-
     svg, a.download {
         display: none !important;
     }
@@ -65,8 +63,12 @@ body {
 
             text-align: left;
 
-            select:first-of-type {
+            select{
                 margin-bottom: .5em;
+
+                &:last-of-type {
+                    margin-bottom: 0;
+                }
             }
         }
 
@@ -130,6 +132,8 @@ body {
                 margin: 0;
 
                 font-size: 1.4em;
+
+                opacity: 1 !important;
 
                 &:last-of-type {
                     display: inline-block;
