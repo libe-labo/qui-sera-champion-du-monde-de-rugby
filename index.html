@@ -17,7 +17,7 @@
 
         <meta property="og:title" content="Euro 2016 : Faites vos jeux !" />
         <meta property="og:site_name" content="Libération.fr"/>
-        <meta property="og:image" content="http://www.liberation.fr/apps/2015/12/pronostics-euro/assets/social.png" />
+        <meta property="og:image" content="http://www.liberation.fr/apps/2015/12/pronostics-euro/assets/social.jpg" />
         <meta property="og:url" content="http://www.liberation.fr/apps/2015/12/pronostics-euro/" />
         <meta property="og:description" content="Faites votre pronostic pour l’Euro 2016 ! La France, l’Espagne ou l’Allemagne : qui sera champion d’Europe de foot ? Faites vos jeux avec l’application Libé !" />
 
@@ -57,7 +57,7 @@
                     <span class="group__name">{{ groupname }}</span>
                     <div class="group__inner hidden-sm hidden-xs">
                         <ul x-group="{{ groupname }}"  class="group__flags" dragular="dragularOptions">
-                            <li x-team="{{ team.id }}" x-group="{{ groupname }}" class="group__flag" ng-repeat="team in group">
+                            <li ng-style="getOpacityFor(team)" x-team="{{ team.id }}" x-group="{{ groupname }}" class="group__flag" ng-repeat="team in group">
                                 <span>{{ team.initials }}</span>
                                 <img title="{{ team.fullcountry }}" ng-src="assets/flags/{{ team.slug }}.png">
                             </li>

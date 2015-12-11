@@ -12,8 +12,6 @@ angular.module('app', ['dragularModule']).config(['$locationProvider', function(
 
 angular.module('app').controller('RugbyController', ['$scope', '$http', function($scope, $http) {
 
-    var allTeams = [undefined, undefined, undefined, undefined];
-
     $scope.groups = { 'A' : [] , 'B' : [] , 'C' : [] , 'D' : [] , 'E' : [] , 'F' : [] };
     $scope.thirds = [];
     $scope.palmares = [
@@ -270,6 +268,12 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
     /*
     ** Scope style function
     */
+    $scope.getOpacityFor = function(team) {
+        return {
+            opacity: team.order === -1 ? 1 : 0.3
+        };
+    };
+
     $scope.getPronosticStyle = function(group, order) {
         var team = _.find($scope.groups[group], { order : order });
 
