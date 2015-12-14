@@ -1,25 +1,25 @@
 Id	Pays	Initiales	Pays complet	Groupe	Couleur	Couleur texte
 1	France	Fra	France	A	#1B1464	#FFFFFF
-2	Suisse	Sui	Suisse	A	#ED1C24	#FFFFFF
-3	Suède	Suè	Suède	A	#236CE2	#FFCD00
-4	Islande	Isl	Islande	A	#005CA9	#FF0016
-5	Espagne	Esp	Espagne	B	#DC1F1E	#FFCD00
+2	Roumanie	Rou	Roumanie	A	#F3A827	#000000
+3	Albanie	Alb	Albanie	A	#000000	#FF0016
+4	Suisse	Sui	Suisse	A	#ED1C24	#FFFFFF
+5	Angleterre	Ang	Angleterre	B	#FF7099	#000000
 6	Russie	Rus	Russie	B	#860040	#FFFFFF
-7	R. tchèque	Rtc	République tchèque	B	#E30613	#160060
-8	Irlande	Irl	Irlande	B	#63B943	#FFFFFF
+7	Galles	Gal	Galles	B	#00BA40	#000000
+8	Slovaquie	Svq	Slovaquie	B	#FFFAF3	#0042AA
 9	Allemagne	All	Allemagne	C	#FFFAF3	#000000
-10	Italie	Ita	Italie	C	#29ABE2	#FFFFFF
+10	Ukraine	Ukr	Ukraine	C	#FFCD00	#0042AA
 11	Pologne	Pol	Pologne	C	#B50000	#FFFFFF
-12	Turquie	Tur	Turquie	C	#FFFAF3	#9F1737
-13	Belgique	Bel	Belgique	D	#FFCD00	#DC1F1E
-14	Croatie	Cro	Croatie	D	#FFFAF3	#FF0016
-15	Hongrie	Hon	Hongrie	D	#007540	#FFFFFF
-16	Irl. du Nord	IrlN	Irlande du Nord	D	#FFFAF3	#009640
-17	Portugal	Por	Portugal	E	#C00016	#00BA40
-18	Autriche	Aut	Autriche	E	#FF0016	#000000
-19	Slovaquie	Svq	Slovaquie	E	#FFFAF3	#0042AA
-20	Albanie	Alb	Albanie	E	#000000	#FF0016
-21	Angleterre	Ang	Angleterre	F	#FF7099	#000000
-22	Ukraine	Ukr	Ukraine	F	#FFCD00	#0042AA
-23	Roumanie	Rou	Roumanie	F	#F3A827	#000000
-24	Galles	Gal	Galles	F	#00BA40	#000000
+12	Irl. du Nord	IrlN	Irlande du Nord	C	#FFFAF3	#009640
+13	Espagne	Esp	Espagne	D	#DC1F1E	#FFCD00
+14	R. tchèque	Rtc	République tchèque	D	#E30613	#160060
+15	Turquie	Tur	Turquie	D	#FFFAF3	#9F1737
+16	Croatie	Cro	Croatie	D	#FFFAF3	#FF0016
+17	Belgique	Bel	Belgique	E	#FFCD00	#DC1F1E
+18	Italie	Ita	Italie	E	#29ABE2	#FFFFFF
+19	Irlande	Irl	Irlande	E	#63B943	#FFFFFF
+20	Suède	Suè	Suède	E	#236CE2	#FFCD00
+21	Portugal	Por	Portugal	F	#C00016	#00BA40
+22	Islande	Isl	Islande	F	#005CA9	#FF0016
+23	Autriche	Aut	Autriche	F	#FF0016	#000000
+24	Hongrie	Hon	Hongrie	F	#007540	#FFFFFF
