@@ -224,9 +224,9 @@ angular.module('app').controller('RugbyController', ['$scope', '$http', function
         var text = encodeURIComponent('Qui va remporter l’Euro 2016 ?' +
                                       'Faites vos pronostics avec l’application Libé !');
 
-        if (getTeamFor(3, 0, 0) != null) {
+        if (getTeamFor(4, 0, 0) != null) {
             text = encodeURIComponent('Mon pronostic pour l\'Euro 2016 : ' +
-                                      getTeamFor(3, 0, 0).country + ' vainqueur ! Et vous ?');
+                                      getTeamFor(4, 0, 0).country + ' vainqueur ! Et vous ?');
         }
 
         window.open('https://twitter.com/intent/tweet?original_referer=' + '' +
